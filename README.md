@@ -1,16 +1,150 @@
-# React + Vite
+# Secure Test Environment Enforcement
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based secure assessment monitoring system that enforces fullscreen,
+tracks candidate behavior, and produces a reliable audit trail for employer review.
 
-Currently, two official plugins are available:
+This project simulates a high-stakes proctored examination environment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Mandatory Fullscreen Enforcement
+- Requires fullscreen before starting the test  
+- Continuous monitoring of fullscreen state  
+- Detects exit & re-entry  
+- Configurable tolerance for violations  
+- Logs entire fullscreen lifecycle  
 
-## Expanding the ESLint configuration
+### Attention & Activity Monitoring
+- Detects tab switches  
+- Tracks visibility changes  
+- Monitors window blur/focus  
+- Records when candidate leaves or returns  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Copy / Paste / Interaction Detection
+- Logs copy, paste, cut attempts  
+- Detects right-click usage  
+- Captures suspicious keyboard combinations (Ctrl/Cmd shortcuts)
+
+### Unified Event Logging
+All system activities follow a consistent schema:
+
+- {
+- eventType,
+- timestamp,
+- attemptId,
+- questionId,
+- metadata
+- }
+
+
+### Metadata includes:
+- Browser user agent  
+- Online/offline state  
+- Visibility state  
+
+### Persistence & Reliability
+- Logs survive page refresh or accidental closure  
+- Stored in localStorage  
+- Prevents audit trail loss  
+
+### Batch Sync Engine
+- Sends logs at regular intervals  
+- Retries automatically  
+- Tracks sync success/failure  
+- Stops after submission to ensure immutability  
+
+### Clean, Modular Architecture
+- Separation of monitoring, logging, storage & synchronization  
+- UI remains independent from enforcement logic  
+- Easily extendable for future proctoring features  
+
+---
+
+## Tech Stack
+
+- React  
+- JavaScript  
+- Ant Design  
+- Browser APIs  
+- LocalStorage  
+
+---
+
+## Project Structure
+
+- src/
+- ├── core/
+- │ ├── logger/ → centralized event creation
+- │ ├── fullscreen/ → fullscreen lifecycle control
+- │ ├── activity/ → attention & interaction monitors
+- │ ├── storage/ → persistence layer
+- │ └── sync/ → batching & delivery
+- │
+- ├── hooks/
+- │ └── useSecureTest.js → orchestration layer
+- │
+- ├── pages/
+- │ └── TestPage.jsx
+- │
+- └── App.jsx
+
+
+---
+
+## Running the Project
+
+- npm install
+- npm run dev
+
+- Open in Chrome and start the test.
+
+---
+
+## System Workflow
+
+Start Test  
+→ Request fullscreen  
+→ Activate monitors  
+→ Capture events  
+→ Persist locally  
+→ Batch sync  
+→ Lock after submission
+
+---
+
+## Design Principles
+
+- Reliability of audit data  
+- Scalability through modular design  
+- Clear separation of responsibilities  
+- Extensible telemetry framework  
+- Minimal coupling with UI  
+
+---
+
+## Assumptions
+
+- Backend API is mocked  
+- Attempt ID generated client-side  
+- Focus is detection & reporting rather than blocking actions  
+
+---
+
+## Possible Future Enhancements
+
+- Webcam / mic integration  
+- Multi-device detection  
+- Network anomaly monitoring  
+- Encrypted logs  
+- Employer analytics dashboard  
+
+---
+
+## Author
+
+Arun
+
+
+
